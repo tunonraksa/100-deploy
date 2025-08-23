@@ -1,3 +1,38 @@
-.vscode
+# Foundry
+out/
+cache/
+broadcast/
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+coverage.json
+
+# Gas reports
+gas-report.txt
+
+# Hardhat
 artifacts/
+typechain/
+typechain-types/
+
+# Etherscan verification
+cache-etherscan/
 

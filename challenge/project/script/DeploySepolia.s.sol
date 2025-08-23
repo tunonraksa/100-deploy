@@ -2,22 +2,12 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Script.sol";
-import "forge-std/console.sol";
 
 import "src/Split.sol";
 import "src/Challenge.sol";
 
-contract Deploy is Script {
-    // All values below are scaled down by 1/1000 from the original challenge for Sepolia testing.
-    // Constants for initial setup
-    uint256 constant INITIAL_ETH_DEPOSIT = 0.01e18; // 0.01 ETH for testing (original was 100 ETH)
-    
-    // Set these to your desired addresses
-    address constant DEAD_ADDR = 0x000000000000000000000000000000000000dEaD;
-    address constant BEEF_ADDR = 0x000000000000000000000000000000000000bEEF;
-
+contract DeploySepolia is Script {
     function run() external {
-        // Load private key securely from the .env file
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         address deployer = vm.addr(deployerPrivateKey);
         
@@ -30,10 +20,10 @@ contract Deploy is Script {
         Split split = new Split();
         console.log("Split deployed at:", address(split));
 
-        console.log("Creating split with", INITIAL_ETH_DEPOSIT / 1e18, "ETH...");
+        console.log("Creating split with 0.01 ETH...");
         address[] memory addrs = new address[](2);
-        addrs[0] = DEAD_ADDR;
-        addrs[1] = BEEF_ADDR;
+        addrs[0] = address(0x000000000000000000000000000000000000dEaD);
+        addrs[1] = address(0x000000000000000000000000000000000000bEEF);
         uint32[] memory percents = new uint32[](2);
         percents[0] = 5e5; // 50%
         percents[1] = 5e5; // 50%
@@ -44,10 +34,10 @@ contract Deploy is Script {
         Split.SplitData memory splitData = split.splitsById(id);
         console.log("SplitWallet deployed at:", address(splitData.wallet));
         
-        // Deposit ETH into the split wallet
-        console.log("Depositing", INITIAL_ETH_DEPOSIT / 1e18, "ETH into split wallet...");
-        splitData.wallet.deposit{value: INITIAL_ETH_DEPOSIT}();
-        console.log(INITIAL_ETH_DEPOSIT / 1e18, "ETH deposited successfully");
+        // Deposit 0.01 ETH into the split wallet (for testing)
+        console.log("Depositing 0.01 ETH into split wallet...");
+        splitData.wallet.deposit{value: 0.01 ether}();
+        console.log("0.01 ETH deposited successfully");
 
         console.log("Deploying Challenge contract...");
         Challenge challenge = new Challenge(split);
@@ -60,7 +50,7 @@ contract Deploy is Script {
         console.log("Challenge contract:", address(challenge));
         console.log("SplitWallet:", address(splitData.wallet));
         console.log("Split ID:", id);
-        console.log(INITIAL_ETH_DEPOSIT / 1e18, "ETH locked in split wallet");
+        console.log("0.01 ETH locked in split wallet");
         console.log("Deployer:", deployer);
         console.log("===========================");
     }

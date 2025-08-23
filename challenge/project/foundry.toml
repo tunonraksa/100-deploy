@@ -1,0 +1,30 @@
+[profile.default]
+src = 'src'
+out = 'out'
+libs = ['lib']
+fs_permissions = [{ access = 'read-write', path = '/'}]
+
+remappings = [
+    "forge-std=lib/forge-std/src",
+    "@openzeppelin=lib/openzeppelin-contracts",
+    "@clones-with-immutable-args=lib/clones-with-immutable-args",
+]
+
+# Sepolia network configuration
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC_URL}"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+
+# Sepolia profile
+[profile.sepolia]
+src = 'src'
+out = 'out'
+libs = ['lib']
+fs_permissions = [{ access = 'read-write', path = '/'}]
+remappings = [
+    "forge-std=lib/forge-std/src",
+    "@openzeppelin=lib/openzeppelin-contracts",
+    "@clones-with-immutable-args=lib/clones-with-immutable-args",
+]
